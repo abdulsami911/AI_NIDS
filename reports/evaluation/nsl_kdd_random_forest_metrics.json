@@ -1,0 +1,41 @@
+{
+  "model": "random_forest",
+  "train_rows": 125973,
+  "test_rows": 22544,
+  "accuracy": 0.7730660042583393,
+  "macro_f1": 0.7720943567361066,
+  "macro_precision": 0.8144647885931733,
+  "macro_recall": 0.7974008737176737,
+  "attack_precision": 0.9683213982279403,
+  "attack_recall": 0.6216784851554585,
+  "attack_f1": 0.757213363705391,
+  "false_positive_rate": 0.026876737720111215,
+  "per_class": {
+    "Normal": {
+      "precision": 0.6606081789584062,
+      "recall": 0.9731232622798888,
+      "f1-score": 0.7869753497668222,
+      "support": 9711.0
+    },
+    "Attack": {
+      "precision": 0.9683213982279403,
+      "recall": 0.6216784851554585,
+      "f1-score": 0.757213363705391,
+      "support": 12833.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      9450,
+      261
+    ],
+    [
+      4855,
+      7978
+    ]
+  ],
+  "sha256": "af7e65b801bfe63140747fe75fc637bd69e807016f96fd1c59b5bd961ea0dfc6",
+  "dataset": "NSL-KDD",
+  "task": "Binary Normal vs Attack",
+  "independent_benchmark": true
+}

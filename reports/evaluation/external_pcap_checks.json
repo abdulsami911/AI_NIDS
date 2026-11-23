@@ -1,0 +1,81 @@
+{
+  "dataset": "USTC-TFC2016",
+  "label_scope": "capture",
+  "model": "artifacts/models/capture_ensemble.joblib",
+  "model_sha256": "b441b1191450ecb0b8882f2aca519b113721f7a4725b692b3b44b68427b4726f",
+  "captures": [
+    {
+      "file": "Gmail.pcap",
+      "sha256": "6b10fa77c165de6d621842f9becb158d9630b0c913ddf6df2f943a839b142d17",
+      "publisher_group": "Benign",
+      "source": "https://github.com/davidyslu/USTC-TFC2016/blob/master/Benign/Gmail.pcap",
+      "total_frames": 25000,
+      "analyzed_packets": 25000,
+      "unsupported_packets": 0,
+      "flow_count": 8629,
+      "assessed_flows": 143,
+      "model_categories": {
+        "Normal": 139,
+        "Unassessed": 8486,
+        "Worms": 4
+      },
+      "alerted_flows": 0,
+      "alerts_by_predicted_category": {},
+      "example_alerts": []
+    },
+    {
+      "file": "Tinba.pcap",
+      "sha256": "fd893402b392188a4c2a79055776e03def1b7f3ac528397464b93fa848bf9670",
+      "publisher_group": "Malware",
+      "source": "https://github.com/davidyslu/USTC-TFC2016/blob/master/Malware/Tinba.pcap",
+      "total_frames": 22000,
+      "analyzed_packets": 20420,
+      "unsupported_packets": 1580,
+      "flow_count": 10641,
+      "assessed_flows": 1471,
+      "model_categories": {
+        "Fuzzers": 4,
+        "Generic": 1304,
+        "Unassessed": 9170,
+        "Shellcode": 4,
+        "Normal": 159
+      },
+      "alerted_flows": 4,
+      "alerts_by_predicted_category": {
+        "Fuzzers": 4
+      },
+      "example_alerts": [
+        {
+          "flow_id": "FLOW-00001",
+          "first_frame": 6,
+          "last_frame": 31,
+          "service": "-",
+          "spkts": 6,
+          "dpkts": 0,
+          "prediction": "Fuzzers",
+          "score": 0.8073
+        },
+        {
+          "flow_id": "FLOW-01937",
+          "first_frame": 4003,
+          "last_frame": 4528,
+          "service": "-",
+          "spkts": 6,
+          "dpkts": 0,
+          "prediction": "Fuzzers",
+          "score": 0.7771
+        },
+        {
+          "flow_id": "FLOW-05212",
+          "first_frame": 10776,
+          "last_frame": 11381,
+          "service": "-",
+          "spkts": 6,
+          "dpkts": 0,
+          "prediction": "Fuzzers",
+          "score": 0.7771
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Install in your existing project .venv; keep existing Python requirements.
+Flask>=3.0,<4.0
+pandas>=2.0,<3.0
+numpy>=1.24
+scikit-learn>=1.4
+imbalanced-learn>=0.12
+joblib>=1.3
+xgboost>=2.0
+pytest>=8.0

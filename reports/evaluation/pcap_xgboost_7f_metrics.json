@@ -1,0 +1,32 @@
+{
+  "features": [
+    "proto",
+    "dur",
+    "spkts",
+    "dpkts",
+    "sinpkt",
+    "dinpkt",
+    "is_sm_ips_ports"
+  ],
+  "classes": [
+    "Analysis",
+    "Backdoor",
+    "DoS",
+    "Exploits",
+    "Fuzzers",
+    "Generic",
+    "Normal",
+    "Reconnaissance",
+    "Shellcode",
+    "Worms"
+  ],
+  "train_rows": 143229,
+  "test_rows": 72513,
+  "accuracy": 0.6792850937073353,
+  "macro_f1": 0.3232572989413225,
+  "weighted_f1": 0.6972732779100634,
+  "binary_attack_precision": 0.7293250259605399,
+  "binary_attack_recall": 0.9603204987967622,
+  "binary_attack_f1": 0.8290327911423783,
+  "training_seconds": 12.901595914000154
+}

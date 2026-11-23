@@ -1,0 +1,28 @@
+INDEPENDENT NSL-KDD BENCHMARK
+{
+  "dataset": "NSL-KDD",
+  "task": "Binary Normal vs Attack",
+  "independent_benchmark": true,
+  "train_rows": 125973,
+  "test_rows": 22544,
+  "accuracy": 0.7730660042583393,
+  "macro_f1": 0.7720943567361066,
+  "attack_precision": 0.9683213982279403,
+  "attack_recall": 0.6216784851554585,
+  "attack_f1": 0.757213363705391,
+  "training_seconds": 17.88,
+  "scope_note": "Not comparable to UNSW-NB15 multiclass results and NOT a PCAP-compatible model"
+}
+
+              precision    recall  f1-score   support
+
+      Normal       0.66      0.97      0.79      9711
+      Attack       0.97      0.62      0.76     12833
+
+    accuracy                           0.77     22544
+   macro avg       0.81      0.80      0.77     22544
+weighted avg       0.84      0.77      0.77     22544
+
+Confusion matrix (rows=true; 0 Normal, 1 Attack):
+[[9450  261]
+ [4855 7978]]

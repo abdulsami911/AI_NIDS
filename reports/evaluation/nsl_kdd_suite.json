@@ -1,0 +1,131 @@
+{
+  "dataset": "NSL-KDD",
+  "task": "Binary Normal vs Attack",
+  "seed": 42,
+  "train_rows": 125973,
+  "test_rows": 22544,
+  "classes": [
+    "Normal",
+    "Attack"
+  ],
+  "files_sha256": {
+    "KDDTrain+.txt": "1b86d2f957b33082081bba410fe129b475efebcc13c9014c3f447c8271aadf95",
+    "KDDTest+.txt": "fa46b0935342616aa83b7c2578db355b6a7aaabbc492248172c7a1e8b7ab8f84"
+  },
+  "models": {
+    "random_forest": {
+      "model": "random_forest",
+      "train_rows": 125973,
+      "test_rows": 22544,
+      "accuracy": 0.7730660042583393,
+      "macro_f1": 0.7720943567361066,
+      "macro_precision": 0.8144647885931733,
+      "macro_recall": 0.7974008737176737,
+      "attack_precision": 0.9683213982279403,
+      "attack_recall": 0.6216784851554585,
+      "attack_f1": 0.757213363705391,
+      "false_positive_rate": 0.026876737720111215,
+      "per_class": {
+        "Normal": {
+          "precision": 0.6606081789584062,
+          "recall": 0.9731232622798888,
+          "f1-score": 0.7869753497668222,
+          "support": 9711.0
+        },
+        "Attack": {
+          "precision": 0.9683213982279403,
+          "recall": 0.6216784851554585,
+          "f1-score": 0.757213363705391,
+          "support": 12833.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          9450,
+          261
+        ],
+        [
+          4855,
+          7978
+        ]
+      ],
+      "sha256": "af7e65b801bfe63140747fe75fc637bd69e807016f96fd1c59b5bd961ea0dfc6"
+    },
+    "xgboost": {
+      "model": "xgboost",
+      "train_rows": 125973,
+      "test_rows": 22544,
+      "accuracy": 0.7944907735982967,
+      "macro_f1": 0.7941166578125853,
+      "macro_precision": 0.8263184821558027,
+      "macro_recall": 0.8160441809998347,
+      "attack_precision": 0.9685714285714285,
+      "attack_recall": 0.6604067638120471,
+      "attack_f1": 0.7853403141361257,
+      "false_positive_rate": 0.028318401812377717,
+      "per_class": {
+        "Normal": {
+          "precision": 0.6840655357401769,
+          "recall": 0.9716815981876222,
+          "f1-score": 0.8028930014890449,
+          "support": 9711.0
+        },
+        "Attack": {
+          "precision": 0.9685714285714285,
+          "recall": 0.6604067638120471,
+          "f1-score": 0.7853403141361257,
+          "support": 12833.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          9436,
+          275
+        ],
+        [
+          4358,
+          8475
+        ]
+      ],
+      "sha256": "a6345e1ac20df8316a30416507ca2d3ce8795b142c4797aadfc9b042613143fa"
+    },
+    "knn": {
+      "model": "knn",
+      "train_rows": 10000,
+      "test_rows": 22544,
+      "accuracy": 0.7730660042583393,
+      "macro_f1": 0.7721414930609062,
+      "macro_precision": 0.8136486867883157,
+      "macro_recall": 0.797175406575682,
+      "attack_precision": 0.9662839879154078,
+      "attack_recall": 0.6230811189901037,
+      "attack_f1": 0.7576274398332385,
+      "false_positive_rate": 0.028730305838739572,
+      "per_class": {
+        "Normal": {
+          "precision": 0.6610133856612236,
+          "recall": 0.9712696941612604,
+          "f1-score": 0.7866555462885738,
+          "support": 9711.0
+        },
+        "Attack": {
+          "precision": 0.9662839879154078,
+          "recall": 0.6230811189901037,
+          "f1-score": 0.7576274398332385,
+          "support": 12833.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          9432,
+          279
+        ],
+        [
+          4837,
+          7996
+        ]
+      ],
+      "sha256": "1caf88921eb26293251b6e17c517d6691e5ecc7f3a37e944eaeb0cb51ce1e5fe"
+    }
+  }
+}

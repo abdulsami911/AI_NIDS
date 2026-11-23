@@ -1,0 +1,29 @@
+AI-NIDS PCAP-Compatible XGBoost
+
+Training records: 143229
+Testing records: 72513
+Training time: 12.90s
+Inference time: 0.80s
+Accuracy: 0.679285
+Macro F1: 0.323257
+Weighted F1: 0.697273
+Attack precision: 0.729325
+Attack recall: 0.960320
+Attack F1: 0.829033
+
+                precision    recall  f1-score   support
+
+      Analysis       0.03      0.19      0.04        58
+      Backdoor       0.21      0.14      0.17        57
+           DoS       0.61      0.06      0.11      1224
+      Exploits       0.60      0.79      0.68      8004
+       Fuzzers       0.22      0.46      0.29      4811
+       Generic       0.75      0.87      0.81     18823
+        Normal       0.94      0.64      0.76     35945
+Reconnaissance       0.29      0.42      0.34      3169
+     Shellcode       0.00      0.00      0.00       378
+         Worms       0.02      0.07      0.03        44
+
+      accuracy                           0.68     72513
+     macro avg       0.37      0.36      0.32     72513
+  weighted avg       0.76      0.68      0.70     72513

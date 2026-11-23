@@ -1,0 +1,2 @@
+flow_id,src_ip,src_port,dst_ip,dst_port,total_packets,total_bytes,start_time,end_time,proto,dur,spkts,dpkts,sinpkt,dinpkt,is_sm_ips_ports,service,sbytes,dbytes,predicted_category,is_predicted_attack,model_score,alert_raised,alert_score_threshold,feature_schema,review_flag,model_name
+FLOW-00001,127.0.0.1,39848,127.0.0.1,8000,12,1069,1795443137.778751121,1795443137.779684620,tcp,0.000933499,6,6,0.1831628,0.1841038,0,http,442,459,Normal,False,0.9829,False,0.5313563346862793,pcap_ip_bytes_v1,Predicted Normal,XGBoost (run-rduvmg4c)

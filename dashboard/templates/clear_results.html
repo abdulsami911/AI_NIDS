@@ -1,0 +1,11 @@
+{% macro clear_control(action, caption, cutoff=none) %}
+<details class="clear-control">
+  <summary>{{caption}}</summary>
+  <form method="post" action="{{action}}">
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+    {% if cutoff is not none %}<input type="hidden" name="through" value="{{cutoff}}">{% endif %}
+    <p>This permanently clears the selected flow predictions and packet mappings from dashboard history. The saved capture files and training reports stay on disk.</p>
+    <button type="submit" class="btn danger" name="confirm" value="clear">Confirm and clear results</button>
+  </form>
+</details>
+{% endmacro %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Model analytics{% endblock %}
+{% block content %}
+{% set scopes = {'capture':'UNSW-NB15 · capture features', 'full':'UNSW-NB15 · full features', 'nsl':'NSL-KDD · independent benchmark'} %}
+{% set pcap = benchmark == 'capture' %}
+{% set offline = benchmark == 'full' %}
+{% set rows = suite if pcap else (full[0] if offline and full else secondary if not offline else {}) %}
+<h1>Model analytics</h1>
+<nav class="analytics-nav" aria-label="Analytics sections"><a href="#benchmarks">Training and testing</a><a href="#external">External PCAP checks</a><a href="#uploads">Upload history</a></nav>
+
+<section class="panel" id="benchmarks">
+  <h2>Training and testing</h2>
+  <div class="filters">{% for key, label in scopes.items() %}
+    <a class="filter {{'selected' if key == benchmark}}" href="{{url_for('models', benchmark=key, algorithm=algorithm)}}">{{label}}</a>
+  {% endfor %}</div>
+  {% if rows %}
+  <p>{% if pcap %}TCP and UDP rows from the official UNSW-NB15 splits. {{titles[suite.selected_model]}} is the requested upload default; the member validation scores remain visible for comparison.
+  {% elif offline %}Offline comparison using 42 UNSW-NB15 predictors and ten categories.
+  {% else %}Independent binary classification of Normal and Attack with 41 NSL-KDD predictors.{% endif %}</p>
+  <div class="table-wrap"><table><thead><tr><th>Split</th><th>Input file</th><th>Rows in scope</th></tr></thead><tbody>
+  {% for split in ['Training','Testing'] %}<tr><td>{{split}}</td><td class="mono">
+    {% if offline %}{{rows.sources[loop.index0].path}}{% elif pcap %}datasets/unsw_nb15/UNSW_NB15_{{split|lower}}-set.csv{% else %}datasets/nsl_kdd/{{'KDDTrain+.txt' if loop.first else 'KDDTest+.txt'}}{% endif %}
+  </td><td>{{'{:,}'.format(rows.train_rows if loop.first else rows.test_rows)}}</td></tr>{% endfor %}</tbody></table></div>
+  {% if pcap %}<p>{{'{:,}'.format(suite.validation_rows)}} rows of the training split were reserved for comparing candidates. The final fit reused the training split.</p>{% endif %}
+  <h3>Test performance</h3>
+  <div class="table-wrap"><table><thead><tr><th>Algorithm</th><th>Real fit rows</th><th>Accuracy</th><th>Macro precision</th><th>Macro recall</th><th>Macro-F1</th>{% if pcap %}<th>Alert false positive rate</th><th>Alert recall</th>{% endif %}</tr></thead><tbody>
+  {% for key, title in titles.items() %}
+    {% set record = (full|selectattr('name','equalto',key)|first) if offline else rows.models.get(key) %}
+    {% if record %}{% set m = record.metrics if offline else record.test if pcap else record %}
+    <tr><td><a href="{{url_for('models', algorithm=key, benchmark=benchmark, _anchor='inspection')}}">{{title}}</a></td>
+    <td>{{'{:,}'.format(record.selected_train_rows if offline else record.train_rows)}}</td>
+    <td>{{'%.2f%%'|format(100*m.accuracy)}}</td><td>{{'%.3f'|format(m.macro_precision)}}</td><td>{{'%.3f'|format(m.macro_recall)}}</td><td>{{'%.3f'|format(m.macro_f1)}}</td>
+    {% if pcap %}<td>{{'%.2f%%'|format(m.deployment.false_alarms_per_normal_flow*100) if m.deployment else '—'}}</td>
+    <td>{{'%.2f%%'|format(m.deployment.alerts_per_attack_flow*100) if m.deployment else '—'}}</td>{% endif %}</tr>{% endif %}
+  {% endfor %}</tbody></table></div>
+  {% if pcap %}<p>Accuracy and macro metrics use the classifier’s highest score on all test rows. Alert metrics include the deployed decision rules and count every labeled test flow in the relevant denominator.</p>{% endif %}
+  {% else %}<p>No evaluation report is available for this benchmark.</p>{% endif %}
+</section>
+
+<section class="panel" id="inspection">
+  <h2>Inspect a model</h2>
+  <form method="get" action="{{url_for('models')}}#inspection" class="analysis-controls">
+    <label>Benchmark<select name="benchmark">{% for key,label in scopes.items() %}<option value="{{key}}" {{'selected' if key==benchmark}}>{{label}}</option>{% endfor %}</select></label>
+    <label>Algorithm<select name="algorithm">{% for key,title in titles.items() %}<option value="{{key}}" {{'selected' if key==algorithm}}>{{title}}</option>{% endfor %}</select></label>
+    <button class="btn" type="submit">Show results</button>
+  </form>
+  {% if detail %}
+  {% if pcap %}
+    <h3>Validation macro-F1 by training configuration</h3>
+    {% for trial in capture_record.trials %}<div class="measure-row"><span>{{trial.variant}}{{' · selected' if loop.index0==capture_record.selected_trial}}</span>
+      <div class="track"><div class="fill" style="width:{{100*trial.metrics.macro_f1}}%"></div></div><strong>{{'%.3f'|format(trial.metrics.macro_f1)}}</strong></div>{% endfor %}
+    <p>Saved pipeline <code>{{capture_record.artifact}}</code>. {% if capture_record.resampled_rows is not none %}Final fit used {{'{:,}'.format(capture_record.resampled_rows)}} rows after resampling.{% else %}This ensemble averages the three separately fitted member pipelines.{% endif %}</p>
+    {% if detail.deployment and detail.deployment.correct_normal is defined %}
+    <h3>Normal recognition on the official test split</h3>
+    <p>Of {{'{:,}'.format(detail.deployment.normal_support)}} labeled Normal flows, the highest-score rule recognized {{'{:,}'.format(detail.deployment.raw_correct_normal)}} within coverage. The deployed Normal rule recognized {{'{:,}'.format(detail.deployment.correct_normal)}}.
+    It also reassigned {{'{:,}'.format(detail.deployment.reassigned_attacks_to_normal)}} true attack flows to Normal. {{'{:,}'.format(detail.deployment.unassessed)}} total test flows were outside coverage.</p>{% endif %}
+  {% endif %}
+  <details open><summary>{{titles[algorithm]}} · per-class test results</summary><div class="table-wrap"><table>
+    <thead><tr><th>Actual category</th><th>Precision</th><th>Recall</th><th>F1</th><th>Labeled test rows</th></tr></thead><tbody>
+    {% for cat, m in detail.per_class.items() %}<tr><td>{{cat}}</td><td>{{'%.3f'|format(m.precision)}}</td><td>{{'%.3f'|format(m.recall)}}</td><td>{{'%.3f'|format(m['f1-score'])}}</td><td>{{'{:,}'.format(m.support|int)}}</td></tr>{% endfor %}</tbody></table></div></details>
+  {% set matrix = detail.confusion if offline else detail.confusion_matrix %}
+  {% if matrix %}<details><summary>Confusion matrix</summary><p>Rows show the actual class. Columns show the classifier’s prediction.</p>
+  <div class="table-wrap"><table class="confusion"><thead><tr><th>Actual / predicted</th>{% for name in classes %}<th>{{name}}</th>{% endfor %}</tr></thead><tbody>
+  {% for row in matrix %}{% set idx = loop.index0 %}<tr><th>{{classes[idx]}}</th>{% for value in row %}<td class="{{'correct' if idx==loop.index0}}">{{value}}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div></details>{% endif %}
+  {% else %}<p>No recorded results for this selection.</p>{% endif %}
+</section>
+
+<section class="panel" id="external"><h2>External PCAP checks</h2>
+{% if external %}<p>USTC-TFC2016 files were evaluated with the frozen pipeline <code>{{external.model}}</code>. The publisher labels each file as a whole.</p>
+<div class="table-wrap"><table><thead><tr><th>File</th><th>Publisher group</th><th>Flows</th><th>Assessed</th><th>Normal predictions</th><th>Unassessed</th><th>Alerts</th></tr></thead><tbody>
+{% for c in external.captures %}<tr><td>{{c.file}}</td><td>{{c.publisher_group}}</td><td>{{c.flow_count}}</td><td>{{c.assessed_flows}}</td><td>{{c.model_categories.get('Normal',0)}}</td><td>{{c.flow_count-c.assessed_flows}}</td><td>{{c.alerted_flows}}</td></tr>{% endfor %}</tbody></table></div>
+{% else %}<p>No external validation report is available.</p>{% endif %}
+</section>
+
+<section class="panel" id="uploads"><h2>Upload history</h2>
+<p>Each row links the analyzed file to the model recorded at the time of inference. Accuracy on an upload requires independent flow labels.</p>
+<div class="table-wrap"><table><thead><tr><th>Analyzed file</th><th>Saved model / run</th><th>Created (UTC)</th><th>Assessed / flows</th><th>Normal</th><th>Alerts</th></tr></thead><tbody>
+{% for c in captures %}<tr><td><a href="{{url_for('capture_page', capture_id=c.id)}}">{{c.filename}}</a></td><td>{{c.model_name or 'Unavailable'}}</td><td>{{c.created}}</td><td>{{c.attack_count+c.normal_count}} / {{c.flow_count}}</td><td>{{c.normal_count}}</td><td>{{c.alert_count if c.alert_count is not none else c.attack_count}}</td></tr>{% else %}<tr><td colspan="6" class="empty">No completed captures in dashboard history.</td></tr>{% endfor %}
+</tbody></table></div>
+{% if pages>1 %}<div class="pager">Page {{page}} of {{pages}} {% for direction, target in [('Previous',page-1),('Next',page+1)] %}{% if target>=1 and target<=pages %}<a href="{{url_for('models',page=target,algorithm=algorithm,benchmark=benchmark,_anchor='uploads')}}">{{direction}}</a>{% endif %}{% endfor %}</div>{% endif %}
+</section>
+{% endblock %}

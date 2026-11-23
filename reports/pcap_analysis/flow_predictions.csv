@@ -1,0 +1,21 @@
+flow_id,src_ip,src_port,dst_ip,dst_port,total_packets,predicted_category,is_predicted_attack,model_score,model_name,feature_schema
+FLOW-00001,10.111.6.68,43000,3.161.104.7,443,2,Normal,False,0.4968,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00002,2404:3100:140e:3740:cdc2:607b:fc30:5d66,55600,2a03:2880:f267:cd:face:b00c:0:167,5222,32,Fuzzers,True,0.3694,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00003,10.111.6.68,41467,10.111.6.24,53,2,DoS,True,0.8267,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00004,10.111.6.68,45224,10.111.6.24,53,2,DoS,True,0.8604,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00005,10.111.6.68,51302,10.111.6.24,53,2,DoS,True,0.7824,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00006,10.111.6.68,16391,10.111.6.24,53,2,DoS,True,0.7824,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00007,10.111.6.68,52640,10.111.6.24,53,2,DoS,True,0.9528,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00008,10.111.6.68,56184,10.111.6.24,53,2,DoS,True,0.9528,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00009,2404:3100:140e:3740:cdc2:607b:fc30:5d66,40048,2001:4860:482c:7700::,443,27,Fuzzers,True,0.6984,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00010,2404:3100:140e:3740:cdc2:607b:fc30:5d66,35315,2a03:2880:f267:cd:face:b00c:0:167,443,28,Exploits,True,0.7669,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00012,10.111.6.68,33616,10.111.6.24,53,2,DoS,True,0.8267,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00013,10.111.6.68,10981,10.111.6.24,53,2,DoS,True,0.8267,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00014,10.111.6.68,21759,10.111.6.24,53,2,DoS,True,0.8267,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00015,2404:3100:140e:3740:cdc2:607b:fc30:5d66,38579,2a03:2880:f267:e5:face:b00c:0:4420,443,149,Normal,False,0.5615,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00016,10.111.6.68,38805,10.111.6.24,53,2,DoS,True,0.9537,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00017,10.111.6.68,44585,10.111.6.24,53,2,DoS,True,0.9537,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00018,10.111.6.68,6312,10.111.6.24,53,2,DoS,True,0.922,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00019,2404:3100:140e:3740:cdc2:607b:fc30:5d66,46125,2a00:1450:4018:811::200e,443,34,Normal,False,0.9079,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00020,2404:3100:140e:3740:cdc2:607b:fc30:5d66,54438,2404:3100:d:3::77a0:5810,443,2,DoS,True,0.5602,XGBoost PCAP 7-Feature,pcap_7f_v1
+FLOW-00021,2404:3100:140e:3740:cdc2:607b:fc30:5d66,33098,2a00:1450:400c:c04::bc,5228,2,Normal,False,0.4968,XGBoost PCAP 7-Feature,pcap_7f_v1
